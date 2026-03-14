@@ -29,6 +29,15 @@
             <a href="{{ route('horarios.index') }}" class="{{ request()->is('horarios*') ? 'active' : '' }}">
                 <i class="bi bi-clock"></i> Horarios
             </a>
+            <form action="{{ route('logout') }}" method="POST" class="mt-auto">
+                @csrf
+                <button type="submit" style="background:none; border:none; width:100%;"
+                        class="text-start">
+                    <a class="text-danger">
+                        <i class="bi bi-box-arrow-left"></i> Cerrar sesión
+                    </a>
+                </button>
+            </form>
         </div>
 
         {{-- Contenido --}}
