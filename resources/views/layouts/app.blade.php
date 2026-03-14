@@ -29,6 +29,9 @@
             <a href="{{ route('horarios.index') }}" class="{{ request()->is('horarios*') ? 'active' : '' }}">
                 <i class="bi bi-clock"></i> Horarios
             </a>
+            <a href="{{ route('grupos.index') }}" class="{{ request()->is('grupos*') ? 'active' : '' }}">
+                <i class="bi bi-collection"></i> Grupos
+            </a>
             <form action="{{ route('logout') }}" method="POST" class="mt-auto">
                 @csrf
                 <button type="submit" style="background:none; border:none; width:100%;"
