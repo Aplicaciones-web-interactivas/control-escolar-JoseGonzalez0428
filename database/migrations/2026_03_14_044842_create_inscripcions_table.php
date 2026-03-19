@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('inscripcions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('grupo_id')->constrained('grupos')->onDelete('cascade');
+            $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
+            // Un alumno no puede inscribirse dos veces al mismo grupo
+            $table->unique(['grupo_id', 'usuario_id']);
             $table->timestamps();
         });
     }

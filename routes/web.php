@@ -7,6 +7,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\GrupoController;
+use App\Http\Controllers\InscripcionController;
 
 // Rutas públicas (sin sesión)
 Route::get('/login',  [AuthController::class, 'showLogin'])->name('login');
@@ -20,4 +21,7 @@ Route::middleware('auth.sesion')->group(function () {
     Route::resource('materias', MateriaController::class);
     Route::resource('horarios', HorarioController::class);
     Route::resource('grupos', GrupoController::class);
+    Route::resource('inscripciones', InscripcionController::class)->only([
+    'index', 'create', 'store', 'show', 'destroy'
+    ]);
 });

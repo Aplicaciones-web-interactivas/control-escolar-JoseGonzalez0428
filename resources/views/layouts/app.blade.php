@@ -32,6 +32,9 @@
             <a href="{{ route('grupos.index') }}" class="{{ request()->is('grupos*') ? 'active' : '' }}">
                 <i class="bi bi-collection"></i> Grupos
             </a>
+            <a href="{{ route('inscripciones.index') }}" class="{{ request()->is('inscripciones*') ? 'active' : '' }}">
+                <i class="bi bi-person-check"></i> Inscripciones
+            </a>
             <form action="{{ route('logout') }}" method="POST" class="mt-auto">
                 @csrf
                 <button type="submit" style="background:none; border:none; width:100%;"
