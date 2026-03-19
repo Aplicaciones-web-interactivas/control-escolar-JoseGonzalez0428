@@ -35,6 +35,9 @@
             <a href="{{ route('inscripciones.index') }}" class="{{ request()->is('inscripciones*') ? 'active' : '' }}">
                 <i class="bi bi-person-check"></i> Inscripciones
             </a>
+            <a href="{{ route('calificaciones.index') }}" class="{{ request()->is('calificaciones*') ? 'active' : '' }}">
+                <i class="bi bi-star"></i> Calificaciones
+            </a>
             <form action="{{ route('logout') }}" method="POST" class="mt-auto">
                 @csrf
                 <button type="submit" style="background:none; border:none; width:100%;"

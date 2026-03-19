@@ -49,23 +49,23 @@ class InscripcionController extends Controller
     }
 
     public function show($id)
-{
-    $inscripcion = Inscripcion::findOrFail($id);
-    
-    $inscripcion->load([
-        'usuario',
-        'grupo.horario.materia',
-        'grupo.horario.usuario',
-    ]);
-    
-    return view('inscripciones.ver', compact('inscripcion'));
-}
+    {
+        $inscripcion = Inscripcion::findOrFail($id);
+        
+        $inscripcion->load([
+            'usuario',
+            'grupo.horario.materia',
+            'grupo.horario.usuario',
+        ]);
+        
+        return view('inscripciones.ver', compact('inscripcion'));
+    }
 
-public function destroy($id)
-{
-    $inscripcion = Inscripcion::findOrFail($id);
-    $inscripcion->delete();
-    return redirect()->route('inscripciones.index')
-                     ->with('exito', 'Inscripción eliminada correctamente.');
-}
+    public function destroy($id)
+    {
+        $inscripcion = Inscripcion::findOrFail($id);
+        $inscripcion->delete();
+        return redirect()->route('inscripciones.index')
+                        ->with('exito', 'Inscripción eliminada correctamente.');
+    }
 }
