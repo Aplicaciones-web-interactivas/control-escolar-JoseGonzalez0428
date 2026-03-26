@@ -46,9 +46,9 @@
                     <tbody>
                         @forelse($usuario->horarios as $h)
                         <tr>
-                            <td>{{ $h->materia->nombre ?? '—' }}</td>
-                            <td>{{ implode(', ', $h->dias) }}</td>
-                            <td>{{ $h->hora_inicio }} - {{ $h->hora_fin }}</td>
+                            <td data-label="Materia">{{ $h->materia->nombre ?? '—' }}</td>
+                            <td data-label="Días">{{ implode(', ', $h->dias) }}</td>
+                            <td data-label="Horario">{{ $h->hora_inicio }} - {{ $h->hora_fin }}</td>
                         </tr>
                         @empty
                         <tr><td colspan="3" class="text-center text-muted py-3">Sin horarios asignados.</td></tr>

@@ -24,11 +24,11 @@
             <tbody>
                 @forelse($inscripciones as $inscripcion)
                 <tr>
-                    <td>{{ $inscripcion->id }}</td>
-                    <td>{{ $inscripcion->usuario->nombre ?? '—' }}</td>
-                    <td>{{ $inscripcion->grupo->nombre ?? '—' }}</td>
-                    <td>{{ $inscripcion->grupo->horario->materia->nombre ?? '—' }}</td>
-                    <td>
+                    <td data-label="ID">{{ $inscripcion->id }}</td>
+                    <td data-label="Alumno">{{ $inscripcion->usuario->nombre ?? '—' }}</td>
+                    <td data-label="Grupo">{{ $inscripcion->grupo->nombre ?? '—' }}</td>
+                    <td data-label="Materia">{{ $inscripcion->grupo->horario->materia->nombre ?? '—' }}</td>
+                    <td data-label="Acciones">
                         <a href="{{ route('inscripciones.show', $inscripcion) }}" class="btn btn-sm btn-outline-info">
                             <i class="bi bi-eye"></i>
                         </a>

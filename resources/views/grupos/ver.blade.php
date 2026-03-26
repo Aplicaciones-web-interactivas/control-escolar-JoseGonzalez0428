@@ -39,9 +39,9 @@
                     <tbody>
                         @forelse($grupo->inscripciones as $inscripcion)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $inscripcion->usuario->nombre ?? '—' }}</td>
-                            <td><code>{{ $inscripcion->usuario->clave_institucional ?? '—' }}</code></td>
+                            <td data-label="ID">{{ $loop->iteration }}</td>
+                            <td data-label="Nombre">{{ $inscripcion->usuario->nombre ?? '—' }}</td>
+                            <td data-label="Clave Institucional"><code>{{ $inscripcion->usuario->clave_institucional ?? '—' }}</code></td>
                         </tr>
                         @empty
                         <tr><td colspan="3" class="text-center text-muted py-3">Sin alumnos inscritos.</td></tr>

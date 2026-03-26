@@ -25,16 +25,16 @@
             <tbody>
                 @forelse($calificaciones as $cal)
                 <tr>
-                    <td>{{ $cal->id }}</td>
-                    <td>{{ $cal->usuario?->nombre ?? '—' }}</td>
-                    <td>{{ $cal->grupo?->nombre ?? '—' }}</td>
-                    <td>{{ $cal->grupo?->horario?->materia?->nombre ?? '—' }}</td>
-                    <td>
+                    <td data-label="ID">{{ $cal->id }}</td>
+                    <td data-label="Alumno">{{ $cal->usuario?->nombre ?? '—' }}</td>
+                    <td data-label="Grupo">{{ $cal->grupo?->nombre ?? '—' }}</td>
+                    <td data-label="Materia">{{ $cal->grupo?->horario?->materia?->nombre ?? '—' }}</td>
+                    <td data-label="Calificación">
                         <span class="badge bg-{{ $cal->calificacion >= 6 ? 'success' : 'danger' }} fs-6">
                             {{ number_format($cal->calificacion, 1) }}
                         </span>
                     </td>
-                    <td>
+                    <td data-label="Acciones">
                         <a href="{{ route('calificaciones.show', $cal->id) }}" class="btn btn-sm btn-outline-info">
                             <i class="bi bi-eye"></i>
                         </a>

@@ -25,22 +25,22 @@
             <tbody>
                 @forelse($usuarios as $usuario)
                 <tr>
-                    <td>{{ $usuario->id }}</td>
-                    <td>{{ $usuario->nombre }}</td>
-                    <td><code>{{ $usuario->clave_institucional }}</code></td>
-                    <td>
+                    <td data-label="#">{{ $usuario->id }}</td>
+                    <td data-label="Nombre">{{ $usuario->nombre }}</td>
+                    <td data-label="Clave"><code>{{ $usuario->clave_institucional }}</code></td>
+                    <td data-label="Rol">
                         <span class="badge bg-{{ $usuario->rol === 'admin' ? 'danger' : ($usuario->rol === 'maestro' ? 'primary' : 'secondary') }}">
                             {{ ucfirst($usuario->rol) }}
                         </span>
                     </td>
-                    <td>
+                    <td data-label="Estado">
                         @if($usuario->activo)
                             <span class="badge bg-success">Activo</span>
                         @else
                             <span class="badge bg-danger">Inactivo</span>
                         @endif
                     </td>
-                    <td>
+                    <td data-label="Acciones">
                         <a href="{{ route('usuarios.show', $usuario) }}" class="btn btn-sm btn-outline-info">
                             <i class="bi bi-eye"></i>
                         </a>

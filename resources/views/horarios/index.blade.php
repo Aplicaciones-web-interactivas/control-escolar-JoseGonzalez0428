@@ -26,13 +26,13 @@
             <tbody>
                 @forelse($horarios as $horario)
                 <tr>
-                    <td>{{ $horario->id }}</td>
-                    <td>{{ $horario->materia->nombre ?? '—' }}</td>
-                    <td>{{ $horario->usuario->nombre ?? '—' }}</td>
-                    <td>{{ implode(', ', $horario->dias) }}</td>
-                    <td>{{ $horario->hora_inicio }}</td>
-                    <td>{{ $horario->hora_fin }}</td>
-                    <td>
+                    <td data-label="ID">{{ $horario->id }}</td>
+                    <td data-label="Materia">{{ $horario->materia->nombre ?? '—' }}</td>
+                    <td data-label="Maestro">{{ $horario->usuario->nombre ?? '—' }}</td>
+                    <td data-label="Días">{{ implode(', ', $horario->dias) }}</td>
+                    <td data-label="Hora Inicio">{{ $horario->hora_inicio }}</td>
+                    <td data-label="Hora Fin">{{ $horario->hora_fin }}</td>
+                    <td data-label="Acciones">
                         <a href="{{ route('horarios.show', $horario) }}" class="btn btn-sm btn-outline-info">
                             <i class="bi bi-eye"></i>
                         </a>

@@ -25,15 +25,15 @@
             <tbody>
                 @forelse($grupos as $grupo)
                 <tr>
-                    <td>{{ $grupo->id }}</td>
-                    <td>{{ $grupo->nombre }}</td>
-                    <td>{{ $grupo->horario->materia->nombre ?? '—' }}</td>
-                    <td>{{ $grupo->horario->usuario->nombre ?? '—' }}</td>
-                    <td>
+                    <td data-label="ID">{{ $grupo->id }}</td>
+                    <td data-label="Nombre">{{ $grupo->nombre }}</td>
+                    <td data-label="Materia">{{ $grupo->horario->materia->nombre ?? '—' }}</td>
+                    <td data-label="Maestro">{{ $grupo->horario->usuario->nombre ?? '—' }}</td>
+                    <td data-label="Horario">
                         {{ implode(', ', $grupo->horario->dias) }}
                         {{ $grupo->horario->hora_inicio }} - {{ $grupo->horario->hora_fin }}
                     </td>
-                    <td>
+                    <td data-label="Acciones">
                         <a href="{{ route('grupos.show', $grupo) }}" class="btn btn-sm btn-outline-info">
                             <i class="bi bi-eye"></i>
                         </a>

@@ -9,6 +9,7 @@ use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\InscripcionController;
 use App\Http\Controllers\CalificacionController;
+use App\Http\Controllers\DashboardController;
 
 // Rutas públicas (sin sesión)
 Route::get('/login',  [AuthController::class, 'showLogin'])->name('login');
@@ -17,6 +18,7 @@ Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 
 // Rutas protegidas
 Route::middleware('auth.sesion')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/', fn() => redirect()->route('usuarios.index'));
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('materias', MateriaController::class);

@@ -18,10 +18,10 @@
             <tbody>
                 @forelse($materias as $materia)
                 <tr>
-                    <td>{{ $materia->id }}</td>
-                    <td>{{ $materia->nombre }}</td>
-                    <td><code>{{ $materia->clave }}</code></td>
-                    <td>
+                    <td data-label="ID">{{ $materia->id }}</td>
+                    <td data-label="Nombre">{{ $materia->nombre }}</td>
+                    <td data-label="Clave"><code>{{ $materia->clave }}</code></td>
+                    <td data-label="Acciones">
                         <a href="{{ route('materias.show', $materia) }}" class="btn btn-sm btn-outline-info">
                             <i class="bi bi-eye"></i>
                         </a>
