@@ -17,11 +17,14 @@ class Calificacion extends Model
         'calificacion',
     ];
 
+
+    // Calificacion pertenece a un grupo
     public function grupo()
     {
         return $this->belongsTo(Grupo::class, 'grupo_id', 'id');
     }
 
+    // Calificacion pertenece a un Alumno
     public function usuario()
     {
         return $this->belongsTo(Usuario::class, 'usuario_id', 'id');

@@ -10,6 +10,8 @@ use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\InscripcionController;
 use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TareaController;
+use App\Http\Controllers\EntregaController;
 
 // Rutas públicas (sin sesión)
 Route::get('/login',  [AuthController::class, 'showLogin'])->name('login');
@@ -28,4 +30,16 @@ Route::middleware('auth.sesion')->group(function () {
     'index', 'create', 'store', 'show', 'destroy'
     ]);
     Route::resource('calificaciones', CalificacionController::class);
+
+    //EXAMEN
+    // Tareas
+    Route::get('/tareas',             [TareaController::class, 'index'])->name('tareas.index');
+    Route::get('/tareas/crear',       [TareaController::class, 'create'])->name('tareas.create');
+    Route::post('/tareas',            [TareaController::class, 'store'])->name('tareas.store');
+    Route::get('/tareas/{id}',        [TareaController::class, 'show'])->name('tareas.show');
+    Route::delete('/tareas/{id}',     [TareaController::class, 'destroy'])->name('tareas.destroy');
+
+    // Entregas
+    Route::post('/tareas/{tarea_id}/entregas',  [EntregaController::class, 'store'])->name('entregas.store');
+    Route::get('/entregas/{id}',               [EntregaController::class, 'show'])->name('entregas.show');
 });

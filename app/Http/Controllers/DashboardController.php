@@ -11,7 +11,7 @@ use App\Models\Calificacion;
 class DashboardController extends Controller
 {
     public function index()
-    {
+    {   // Obtener estadísticas generales
         $stats = [
             'usuarios'      => Usuario::count(),
             'alumnos'       => Usuario::where('rol', 'alumno')->count(),
@@ -22,7 +22,8 @@ class DashboardController extends Controller
             'calificaciones'=> Calificacion::count(),
             'promedio'      => round(Calificacion::avg('calificacion') ?? 0, 1),
         ];
-
+        
+        // Obtener las últimas calificaciones e inscripciones
         $ultimas_calificaciones = Calificacion::with(['usuario', 'grupo.horario.materia'])
                                               ->latest()
                                               ->take(5)

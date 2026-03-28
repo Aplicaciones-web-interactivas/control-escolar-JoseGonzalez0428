@@ -42,6 +42,7 @@ class InscripcionController extends Controller
             ])->withInput();
         }
 
+        // Crear la inscripción
         Inscripcion::create($request->only('grupo_id', 'usuario_id'));
 
         return redirect()->route('inscripciones.index')

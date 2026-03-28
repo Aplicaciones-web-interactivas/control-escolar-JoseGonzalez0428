@@ -29,22 +29,26 @@
             <i class="bi bi-book-fill"></i> Materias
         </a>
         <a href="{{ route('horarios.index') }}"
-           class="sidebar-link {{ request()->is('horarios*') ? 'active' : '' }}">
+            class="sidebar-link {{ request()->is('horarios*') ? 'active' : '' }}">
             <i class="bi bi-clock-fill"></i> Horarios
         </a>
 
         <div class="nav-section-title">Alumnos</div>
         <a href="{{ route('grupos.index') }}"
-           class="sidebar-link {{ request()->is('grupos*') ? 'active' : '' }}">
+            class="sidebar-link {{ request()->is('grupos*') ? 'active' : '' }}">
             <i class="bi bi-collection-fill"></i> Grupos
         </a>
         <a href="{{ route('inscripciones.index') }}"
-           class="sidebar-link {{ request()->is('inscripciones*') ? 'active' : '' }}">
+            class="sidebar-link {{ request()->is('inscripciones*') ? 'active' : '' }}">
             <i class="bi bi-person-check-fill"></i> Inscripciones
         </a>
         <a href="{{ route('calificaciones.index') }}"
-           class="sidebar-link {{ request()->is('calificaciones*') ? 'active' : '' }}">
+            class="sidebar-link {{ request()->is('calificaciones*') ? 'active' : '' }}">
             <i class="bi bi-star-fill"></i> Calificaciones
+        </a>
+        <a href="{{ route('tareas.index') }}"
+            class="sidebar-link {{ request()->is('tareas*') ? 'active' : '' }}">
+            <i class="bi bi-clipboard-fill"></i> Tareas
         </a>
     </div>
 

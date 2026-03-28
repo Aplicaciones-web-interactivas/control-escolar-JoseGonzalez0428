@@ -51,7 +51,7 @@ class GrupoController extends Controller
             'nombre'     => 'required|string|max:100',
             'horario_id' => 'required|exists:horarios,id',
         ]);
-
+        
         $grupo->update($request->only('nombre', 'horario_id'));
 
         return redirect()->route('grupos.index')

@@ -26,12 +26,12 @@ class Horario extends Model
     // Relación con Materia
     public function materia()
     {
-        return $this->belongsTo(Materia::class, 'materia_id');
+        return $this->belongsTo(Materia::class, 'materia_id', 'id');
     }
 
-    // Relación con Usuario (maestro)
+    // Relación con Usuario (maestro) ← esta es la que faltaba
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id');
+        return $this->belongsTo(Usuario::class, 'usuario_id', 'id');
     }
 }
