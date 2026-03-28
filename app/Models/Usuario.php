@@ -19,7 +19,6 @@ class Usuario extends Model
         'activo',
     ];
 
-    // 'contrasena' oculta en serialización — siempre cifrada con bcrypt vía Hash::make()
     protected $hidden = [
         'contrasena',
     ];
@@ -28,9 +27,14 @@ class Usuario extends Model
         'activo' => 'boolean',
     ];
 
-    // Un usuario (maestro) puede tener muchos horarios asignados
+    // Un maestro puede tener muchos horarios asignados
     public function horarios()
     {
         return $this->hasMany(Horario::class, 'usuario_id');
+    }
+
+    public function inscripciones()
+    {
+        return $this->hasMany(Inscripcion::class, 'usuario_id', 'id');
     }
 }

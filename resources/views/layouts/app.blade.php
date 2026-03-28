@@ -20,31 +20,46 @@
 
     <div class="sidebar-nav">
         <div class="nav-section-title">Principal</div>
-        <a href="{{ route('usuarios.index') }}"
-           class="sidebar-link {{ request()->is('usuarios*') ? 'active' : '' }}">
-            <i class="bi bi-people-fill"></i> Usuarios
-        </a>
-        <a href="{{ route('materias.index') }}"
-           class="sidebar-link {{ request()->is('materias*') ? 'active' : '' }}">
-            <i class="bi bi-book-fill"></i> Materias
-        </a>
-        <a href="{{ route('horarios.index') }}"
-           class="sidebar-link {{ request()->is('horarios*') ? 'active' : '' }}">
-            <i class="bi bi-clock-fill"></i> Horarios
-        </a>
+            <a href="{{ route('dashboard') }}"
+                class="sidebar-link {{ request()->is('dashboard') ? 'active' : '' }}">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+        @if(session('usuario_rol') === 'admin')
+            <a href="{{ route('usuarios.index') }}"
+            class="sidebar-link {{ request()->is('usuarios*') ? 'active' : '' }}">
+                <i class="bi bi-people-fill"></i> Usuarios
+            </a>
+            <a href="{{ route('materias.index') }}"
+            class="sidebar-link {{ request()->is('materias*') ? 'active' : '' }}">
+                <i class="bi bi-book-fill"></i> Materias
+            </a>
+        @endif
 
-        <div class="nav-section-title">Alumnos</div>
+        @if(in_array(session('usuario_rol'), ['admin', 'maestro']))
+            <a href="{{ route('horarios.index') }}"
+            class="sidebar-link {{ request()->is('horarios*') ? 'active' : '' }}">
+                <i class="bi bi-clock-fill"></i> Horarios
+            </a>
+        @endif
+
+        <div class="nav-section-title">Académico</div>
         <a href="{{ route('grupos.index') }}"
-           class="sidebar-link {{ request()->is('grupos*') ? 'active' : '' }}">
+        class="sidebar-link {{ request()->is('grupos*') ? 'active' : '' }}">
             <i class="bi bi-collection-fill"></i> Grupos
         </a>
         <a href="{{ route('inscripciones.index') }}"
-           class="sidebar-link {{ request()->is('inscripciones*') ? 'active' : '' }}">
+        class="sidebar-link {{ request()->is('inscripciones*') ? 'active' : '' }}">
             <i class="bi bi-person-check-fill"></i> Inscripciones
         </a>
         <a href="{{ route('calificaciones.index') }}"
-           class="sidebar-link {{ request()->is('calificaciones*') ? 'active' : '' }}">
+        class="sidebar-link {{ request()->is('calificaciones*') ? 'active' : '' }}">
             <i class="bi bi-star-fill"></i> Calificaciones
+        </a>
+
+        <div class="nav-section-title">Tareas</div>
+        <a href="{{ route('tareas.index') }}"
+        class="sidebar-link {{ request()->is('tareas*') ? 'active' : '' }}">
+            <i class="bi bi-clipboard-fill"></i> Tareas
         </a>
     </div>
 
