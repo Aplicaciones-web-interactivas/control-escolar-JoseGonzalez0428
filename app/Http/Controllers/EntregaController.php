@@ -53,4 +53,26 @@ class EntregaController extends Controller
             'Content-Type' => 'application/pdf',
         ]);
     }
+
+    // Cancelar entrega (alumno)
+    public function destroy($id)
+    {
+        $entrega = Entrega::findOrFail($id);
+
+        // Solo el alumno dueño puede cancelar su entrega
+        if ($entrega->usuario_id != session('usuario_id')) {
+            abort(403, 'No puedes cancelar la entrega de otro alumno.');
+        }
+
+        // Eliminar el archivo físico
+        $ruta = storage_path('app/public/' . $entrega->archivo_pdf);
+        if (file_exists($ruta)) {
+            unlink($ruta);
+        }
+
+        $entrega->delete();
+
+        return redirect()->route('tareas.show', $entrega->tarea_id)
+                        ->with('exito', 'Entrega cancelada. Ya puedes subir otro archivo.');
+    }
 }

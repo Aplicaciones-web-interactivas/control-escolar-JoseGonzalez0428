@@ -76,6 +76,16 @@
                                class="btn btn-sm btn-outline-info mt-2" target="_blank">
                                 <i class="bi bi-file-pdf me-1"></i> Ver mi PDF
                             </a>
+                            @if(!$tarea->fecha_limite->isPast())
+                                <form action="{{ route('entregas.destroy', $miEntrega->id) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('¿Cancelar tu entrega? Podrás subir otro archivo.')">
+                                    @csrf @method('DELETE')
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-x-circle me-1"></i> Cancelar entrega
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     @elseif($tarea->fecha_limite->isPast())
                         {{-- Venció --}}

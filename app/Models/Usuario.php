@@ -32,4 +32,9 @@ class Usuario extends Model
     {
         return $this->hasMany(Horario::class, 'usuario_id');
     }
+
+    public function inscripciones()
+    {
+        return $this->hasMany(Inscripcion::class, 'usuario_id', 'id');
+    }
 }

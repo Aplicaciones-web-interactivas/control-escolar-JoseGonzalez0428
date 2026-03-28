@@ -34,13 +34,13 @@
                         {{ $grupo->horario->hora_inicio }} - {{ $grupo->horario->hora_fin }}
                     </td>
                     <td data-label="Acciones">
-                        <a href="{{ route('grupos.show', $grupo) }}" class="btn btn-sm btn-outline-info">
+                        <a href="{{ route('grupos.show', $grupo->id) }}" class="btn btn-sm btn-outline-info">
                             <i class="bi bi-eye"></i>
                         </a>
-                        <a href="{{ route('grupos.edit', $grupo) }}" class="btn btn-sm btn-outline-warning">
+                        <a href="{{ route('grupos.edit', $grupo->id) }}" class="btn btn-sm btn-outline-warning">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <form action="{{ route('grupos.destroy', $grupo) }}" method="POST" class="d-inline"
+                        <form action="{{ route('grupos.destroy', $grupo->id) }}" method="POST" class="d-inline"
                               onsubmit="return confirm('¿Eliminar este grupo?')">
                             @csrf @method('DELETE')
                             <button class="btn btn-sm btn-outline-danger">

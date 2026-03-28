@@ -12,11 +12,11 @@
                 <p><strong>Nombre:</strong> {{ $grupo->nombre }}</p>
                 <p><strong>Materia:</strong> {{ $grupo->horario->materia->nombre ?? '—' }}</p>
                 <p><strong>Maestro:</strong> {{ $grupo->horario->usuario->nombre ?? '—' }}</p>
-                <p><strong>Días:</strong> {{ implode(', ', $grupo->horario->dias) }}</p>
-                <p><strong>Horario:</strong> {{ $grupo->horario->hora_inicio }} - {{ $grupo->horario->hora_fin }}</p>
+                <p><strong>Días:</strong> {{ $grupo->horario ? implode(', ', $grupo->horario->dias) : '—' }}</p>
+                <p><strong>Horario:</strong> {{ $grupo->horario ? $grupo->horario->hora_inicio . ' - ' . $grupo->horario->hora_fin : '—' }}</p>
             </div>
             <div class="card-footer d-flex gap-2">
-                <a href="{{ route('grupos.edit', $grupo) }}" class="btn btn-warning btn-sm">
+                <a href="{{ route('grupos.edit', $grupo->id) }}" class="btn btn-warning btn-sm">
                     <i class="bi bi-pencil"></i> Editar
                 </a>
                 <a href="{{ route('grupos.index') }}" class="btn btn-secondary btn-sm">

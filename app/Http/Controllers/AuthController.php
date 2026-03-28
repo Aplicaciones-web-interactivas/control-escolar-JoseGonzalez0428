@@ -14,7 +14,8 @@ class AuthController extends Controller
     {
         // Si ya hay sesión activa, redirigir al inicio
         if (Session::has('usuario_id')) {
-            return redirect()->route('usuarios.index');
+            return redirect()->route('login')
+                             ->with('exito', 'Ya has iniciado sesión como ' . session('usuario_nombre') . '.');
         }
         return view('auth.login');
     }
@@ -62,7 +63,7 @@ class AuthController extends Controller
         }
     }
 
-    return redirect()->route('usuarios.index')
+    return redirect()->route('dashboard')
                      ->with('exito', '¡Bienvenido, ' . $usuario->nombre . '!');
     }
 

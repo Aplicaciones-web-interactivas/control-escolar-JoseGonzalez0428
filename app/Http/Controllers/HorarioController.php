@@ -12,9 +12,18 @@ class HorarioController extends Controller
     // GET /horarios
     public function index()
     {
-        $horarios = Horario::with(['materia', 'usuario'])
-                           ->orderBy('hora_inicio')
-                           ->paginate(15);
+        $rol = session('usuario_rol');
+        $id  = session('usuario_id');
+
+        if ($rol === 'maestro') {
+            $horarios = Horario::with(['materia', 'usuario'])
+                            ->where('usuario_id', $id)
+                            ->orderBy('hora_inicio')->paginate(15);
+        } else {
+            $horarios = Horario::with(['materia', 'usuario'])
+                            ->orderBy('hora_inicio')->paginate(15);
+        }
+
         return view('horarios.index', compact('horarios'));
     }
 
@@ -37,6 +46,11 @@ class HorarioController extends Controller
             'dias'        => 'required|array|min:1',
             'dias.*'      => 'in:lunes,martes,miercoles,jueves,viernes,sabado',
         ]);
+
+        // Maestro solo puede crear horarios donde él es el profesor
+        if (session('usuario_rol') === 'maestro' && $request->usuario_id != session('usuario_id')) {
+            abort(403, 'Solo puedes crear horarios donde tú eres el maestro.');
+        }
 
         Horario::create($request->only(
             'materia_id', 'usuario_id', 'hora_inicio', 'hora_fin', 'dias'
@@ -64,6 +78,12 @@ class HorarioController extends Controller
     // PUT /horarios/{id}
     public function update(Request $request, Horario $horario)
     {
+
+        // Maestro solo puede editar sus propios horarios
+        if (session('usuario_rol') === 'maestro' && $horario->usuario_id != session('usuario_id')) {
+            abort(403, 'No puedes editar horarios de otros maestros.');
+        }
+
         $request->validate([
             'materia_id'  => 'required|exists:materias,id',
             'usuario_id'  => 'required|exists:usuarios,id',
@@ -72,6 +92,10 @@ class HorarioController extends Controller
             'dias'        => 'required|array|min:1',
             'dias.*'      => 'in:lunes,martes,miercoles,jueves,viernes,sabado',
         ]);
+
+        if (session('usuario_rol') === 'maestro') {
+            $request->merge(['usuario_id' => session('usuario_id')]);
+        }
 
         $horario->update($request->only(
             'materia_id', 'usuario_id', 'hora_inicio', 'hora_fin', 'dias'
