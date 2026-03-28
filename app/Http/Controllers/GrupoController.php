@@ -28,7 +28,12 @@ class GrupoController extends Controller
 
     public function create()
     {
-        $horarios = Horario::with('materia')->orderBy('id')->get();
+        // Maestro solo ve sus horarios para asignar al grupo
+        if (session('usuario_rol') === 'maestro') {
+            $horarios = Horario::with('materia')
+                            ->where('usuario_id', session('usuario_id'))
+                            ->orderBy('id')->get();
+        }
         return view('grupos.crear', compact('horarios'));
     }
 
@@ -53,22 +58,27 @@ class GrupoController extends Controller
                          ->with('exito', 'Grupo creado correctamente.');
     }
 
-    public function show(Grupo $grupo)
+    public function edit($id)
     {
-        $grupo->load('horario.materia', 'horario.usuario', 'inscripciones.usuario');
-        return view('grupos.ver', compact('grupo'));
-    }
-
-    public function edit(Grupo $grupo)
-    {
+        $grupo    = Grupo::findOrFail($id);
         $horarios = Horario::with('materia')->orderBy('id')->get();
+
+        // Maestro solo ve sus horarios
+        if (session('usuario_rol') === 'maestro') {
+            $horarios = Horario::with('materia')
+                            ->where('usuario_id', session('usuario_id'))
+                            ->orderBy('id')->get();
+        }
+
         return view('grupos.editar', compact('grupo', 'horarios'));
     }
 
-    public function update(Request $request, Grupo $grupo)
-    {   
-        // Maestro solo puede editar grupos de sus horarios
-        if (session('usuario_rol') === 'maestro' && $grupo->horario?->usuario_id != session('usuario_id')) {
+    public function update(Request $request, $id)
+    {
+        $grupo = Grupo::findOrFail($id);
+
+        if (session('usuario_rol') === 'maestro' &&
+            $grupo->horario?->usuario_id != session('usuario_id')) {
             abort(403, 'No puedes editar grupos de otros maestros.');
         }
 
@@ -77,28 +87,37 @@ class GrupoController extends Controller
             'horario_id' => 'required|exists:horarios,id',
         ]);
 
-        // Maestro no puede asignar el grupo a un horario de otro maestro
         if (session('usuario_rol') === 'maestro') {
-            $horario = \App\Models\Horario::findOrFail($request->horario_id);
+            $horario = Horario::findOrFail($request->horario_id);
             if ($horario->usuario_id != session('usuario_id')) {
                 abort(403, 'No puedes asignar este grupo a un horario que no es tuyo.');
             }
         }
-        
+
         $grupo->update($request->only('nombre', 'horario_id'));
 
         return redirect()->route('grupos.index')
-                         ->with('exito', 'Grupo actualizado correctamente.');
+                        ->with('exito', 'Grupo actualizado correctamente.');
     }
 
-    public function destroy(Grupo $grupo)
+    public function destroy($id)
     {
-        if (session('usuario_rol') === 'maestro' && $grupo->horario?->usuario_id != session('usuario_id')) {
+        $grupo = Grupo::findOrFail($id);
+
+        if (session('usuario_rol') === 'maestro' &&
+            $grupo->horario?->usuario_id != session('usuario_id')) {
             abort(403, 'No puedes eliminar grupos de otros maestros.');
         }
 
         $grupo->delete();
         return redirect()->route('grupos.index')
-                         ->with('exito', 'Grupo eliminado correctamente.');
+                        ->with('exito', 'Grupo eliminado correctamente.');
+    }
+
+    public function show($id)
+    {
+        $grupo = Grupo::findOrFail($id);
+        $grupo->load('horario.materia', 'horario.usuario', 'inscripciones.usuario');
+        return view('grupos.ver', compact('grupo'));
     }
 }

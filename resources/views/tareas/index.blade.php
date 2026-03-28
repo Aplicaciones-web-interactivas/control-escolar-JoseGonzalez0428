@@ -73,10 +73,15 @@
                             <i class="bi bi-eye"></i>
                         </a>
                         @if(session('usuario_rol') === 'maestro')
-                            <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST" class="d-inline"
-                                  onsubmit="return confirm('¿Eliminar esta tarea?')">
+                            <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST"
+                                class="d-inline" id="form-tarea-{{ $tarea->id }}">
                                 @csrf @method('DELETE')
-                                <button class="btn btn-sm btn-outline-danger">
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        onclick="confirmarAccion(
+                                            'form-tarea-{{ $tarea->id }}',
+                                            '¿Eliminar tarea?',
+                                            'Se eliminará la tarea {{ $tarea->titulo }} y todas las entregas.'
+                                        )">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>

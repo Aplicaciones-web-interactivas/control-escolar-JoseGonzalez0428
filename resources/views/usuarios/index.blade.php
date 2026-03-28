@@ -47,10 +47,15 @@
                         <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-sm btn-outline-warning">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('¿Eliminar este usuario?')">
+                        <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" 
+                            class="d-inline" id="form-usuario-{{ $usuario->id }}">
                             @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-outline-danger">
+                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                    onclick="confirmarAccion(
+                                        'form-usuario-{{ $usuario->id }}',
+                                        '¿Eliminar usuario?',
+                                        'Esta acción no se puede deshacer. Se eliminará a {{ $usuario->nombre }}.'
+                                    )">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>

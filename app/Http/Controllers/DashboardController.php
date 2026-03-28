@@ -8,6 +8,7 @@ use App\Models\Grupo;
 use App\Models\Inscripcion;
 use App\Models\Calificacion;
 use App\Models\Tarea;
+use App\Models\Entrega;
 
 class DashboardController extends Controller
 {

@@ -4,9 +4,11 @@
 @section('contenido')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="bi bi-collection"></i> Grupos</h2>
-    <a href="{{ route('grupos.create') }}" class="btn btn-primary">
-        <i class="bi bi-plus-lg"></i> Nuevo Grupo
-    </a>
+    @if(in_array(session('usuario_rol'), ['admin', 'maestro']))
+        <a href="{{ route('grupos.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> Nuevo Grupo
+        </a>
+    @endif
 </div>
 
 <div class="card shadow-sm">
@@ -19,7 +21,9 @@
                     <th>Materia</th>
                     <th>Maestro</th>
                     <th>Horario</th>
-                    <th>Acciones</th>
+                    @if(in_array(session('usuario_rol'), ['admin', 'maestro']))
+                        <th>Acciones</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -33,21 +37,28 @@
                         {{ implode(', ', $grupo->horario->dias) }}
                         {{ $grupo->horario->hora_inicio }} - {{ $grupo->horario->hora_fin }}
                     </td>
-                    <td data-label="Acciones">
-                        <a href="{{ route('grupos.show', $grupo->id) }}" class="btn btn-sm btn-outline-info">
-                            <i class="bi bi-eye"></i>
-                        </a>
-                        <a href="{{ route('grupos.edit', $grupo->id) }}" class="btn btn-sm btn-outline-warning">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="{{ route('grupos.destroy', $grupo->id) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('¿Eliminar este grupo?')">
-                            @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </td>
+                    @if(in_array(session('usuario_rol'), ['admin', 'maestro']))
+                        <td data-label="Acciones">
+                            <a href="{{ route('grupos.show', $grupo->id) }}" class="btn btn-sm btn-outline-info">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{{ route('grupos.edit', $grupo->id) }}" class="btn btn-sm btn-outline-warning">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form action="{{ route('grupos.destroy', $grupo->id) }}" method="POST"
+                                class="d-inline" id="form-grupo-{{ $grupo->id }}">
+                                @csrf @method('DELETE')
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        onclick="confirmarAccion(
+                                            'form-grupo-{{ $grupo->id }}',
+                                            '¿Eliminar grupo?',
+                                            'Se eliminará el grupo {{ $grupo->nombre }} y todas sus inscripciones.'
+                                        )">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    @endif
                 </tr>
                 @empty
                 <tr><td colspan="6" class="text-center text-muted py-4">No hay grupos registrados.</td></tr>

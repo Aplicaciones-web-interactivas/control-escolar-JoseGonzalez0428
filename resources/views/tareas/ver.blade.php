@@ -77,11 +77,17 @@
                                 <i class="bi bi-file-pdf me-1"></i> Ver mi PDF
                             </a>
                             @if(!$tarea->fecha_limite->isPast())
-                                <form action="{{ route('entregas.destroy', $miEntrega->id) }}"
-                                    method="POST"
-                                    onsubmit="return confirm('¿Cancelar tu entrega? Podrás subir otro archivo.')">
+                                <form action="{{ route('entregas.destroy', $miEntrega->id) }}" method="POST"
+                                    id="form-entrega-{{ $miEntrega->id }}">
                                     @csrf @method('DELETE')
-                                    <button class="btn btn-sm btn-outline-danger">
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            onclick="confirmarAccion(
+                                                'form-entrega-{{ $miEntrega->id }}',
+                                                '¿Cancelar tu entrega?',
+                                                'Podrás subir otro archivo PDF mientras la fecha límite no haya vencido.',
+                                                '📄',
+                                                '#f97316'
+                                            )">
                                         <i class="bi bi-x-circle me-1"></i> Cancelar entrega
                                     </button>
                                 </form>

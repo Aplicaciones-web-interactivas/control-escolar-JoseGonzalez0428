@@ -4,9 +4,11 @@
 @section('contenido')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="bi bi-star"></i> Calificaciones</h2>
-    <a href="{{ route('calificaciones.create') }}" class="btn btn-primary">
-        <i class="bi bi-plus-lg"></i> Nueva Calificación
-    </a>
+    @if(in_array(session('usuario_rol'), ['admin', 'maestro']))
+        <a href="{{ route('calificaciones.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> Nueva Calificación
+        </a>
+    @endif
 </div>
 
 <div class="card shadow-sm">
@@ -19,7 +21,9 @@
                     <th>Grupo</th>
                     <th>Materia</th>
                     <th>Calificación</th>
-                    <th>Acciones</th>
+                    @if(in_array(session('usuario_rol'), ['admin', 'maestro']))
+                        <th>Acciones</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -34,21 +38,28 @@
                             {{ number_format($cal->calificacion, 1) }}
                         </span>
                     </td>
-                    <td data-label="Acciones">
-                        <a href="{{ route('calificaciones.show', $cal->id) }}" class="btn btn-sm btn-outline-info">
-                            <i class="bi bi-eye"></i>
-                        </a>
-                        <a href="{{ route('calificaciones.edit', $cal->id) }}" class="btn btn-sm btn-outline-warning">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="{{ route('calificaciones.destroy', $cal->id) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('¿Eliminar esta calificación?')">
-                            @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </td>
+                    @if(in_array(session('usuario_rol'), ['admin', 'maestro']))
+                        <td data-label="Acciones">
+                            <a href="{{ route('calificaciones.show', $cal->id) }}" class="btn btn-sm btn-outline-info">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{{ route('calificaciones.edit', $cal->id) }}" class="btn btn-sm btn-outline-warning">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form action="{{ route('calificaciones.destroy', $cal->id) }}" method="POST"
+                                class="d-inline" id="form-cal-{{ $cal->id }}">
+                                @csrf @method('DELETE')
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        onclick="confirmarAccion(
+                                            'form-cal-{{ $cal->id }}',
+                                            '¿Eliminar calificación?',
+                                            'Se eliminará la calificación de {{ $cal->usuario?->nombre }}.'
+                                        )">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    @endif
                 </tr>
                 @empty
                 <tr><td colspan="6" class="text-center text-muted py-4">No hay calificaciones registradas.</td></tr>

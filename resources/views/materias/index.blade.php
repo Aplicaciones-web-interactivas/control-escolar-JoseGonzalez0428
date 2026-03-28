@@ -28,10 +28,17 @@
                         <a href="{{ route('materias.edit', $materia) }}" class="btn btn-sm btn-outline-warning">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <form action="{{ route('materias.destroy', $materia) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('¿Eliminar esta materia?')">
+                        <form action="{{ route('materias.destroy', $materia) }}" method="POST"
+                            class="d-inline" id="form-materia-{{ $materia->id }}">
                             @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                    onclick="confirmarAccion(
+                                        'form-materia-{{ $materia->id }}',
+                                        '¿Eliminar materia?',
+                                        'Se eliminará {{ $materia->nombre }} y todos sus horarios asociados.'
+                                    )">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>

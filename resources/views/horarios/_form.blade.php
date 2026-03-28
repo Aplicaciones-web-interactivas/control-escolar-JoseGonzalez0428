@@ -12,19 +12,23 @@
     @error('materia_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
 </div>
 
-<div class="mb-3">
-    <label class="form-label fw-semibold">Maestro</label>
-    <select name="usuario_id" class="form-select @error('usuario_id') is-invalid @enderror" required>
-        <option value="">-- Selecciona un maestro --</option>
-        @foreach($usuarios as $usuario)
-            <option value="{{ $usuario->id }}"
-                {{ old('usuario_id', $horario->usuario_id ?? '') == $usuario->id ? 'selected' : '' }}>
-                {{ $usuario->nombre }}
-            </option>
-        @endforeach
-    </select>
-    @error('usuario_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
-</div>
+@if(session('usuario_rol') === 'maestro')
+    <input type="hidden" name="usuario_id" value="{{ session('usuario_id') }}">
+@else
+    <div class="mb-3">
+        <label class="form-label fw-semibold">Maestro</label>
+        <select name="usuario_id" class="form-select @error('usuario_id') is-invalid @enderror" required>
+            <option value="">-- Selecciona un maestro --</option>
+            @foreach($usuarios as $usuario)
+                <option value="{{ $usuario->id }}"
+                    {{ old('usuario_id', $horario->usuario_id ?? '') == $usuario->id ? 'selected' : '' }}>
+                    {{ $usuario->nombre }}
+                </option>
+            @endforeach
+        </select>
+        @error('usuario_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+    </div>
+@endif
 
 <div class="row">
     <div class="col-md-6 mb-3">

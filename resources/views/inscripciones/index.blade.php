@@ -32,10 +32,15 @@
                         <a href="{{ route('inscripciones.show', $inscripcion) }}" class="btn btn-sm btn-outline-info">
                             <i class="bi bi-eye"></i>
                         </a>
-                        <form action="{{ route('inscripciones.destroy', $inscripcion) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('¿Eliminar esta inscripción?')">
+                        <form action="{{ route('inscripciones.destroy', $inscripcion->id) }}" method="POST"
+                            class="d-inline" id="form-inscripcion-{{ $inscripcion->id }}">
                             @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-outline-danger">
+                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                    onclick="confirmarAccion(
+                                        'form-inscripcion-{{ $inscripcion->id }}',
+                                        '¿Eliminar inscripción?',
+                                        'Se dará de baja a {{ $inscripcion->usuario?->nombre }} del grupo {{ $inscripcion->grupo?->nombre }}.'
+                                    )">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>

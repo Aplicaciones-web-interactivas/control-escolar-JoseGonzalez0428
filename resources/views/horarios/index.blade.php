@@ -39,10 +39,15 @@
                         <a href="{{ route('horarios.edit', $horario) }}" class="btn btn-sm btn-outline-warning">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <form action="{{ route('horarios.destroy', $horario) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('¿Eliminar este horario?')">
+                        <form action="{{ route('horarios.destroy', $horario) }}" method="POST"
+                            class="d-inline" id="form-horario-{{ $horario->id }}">
                             @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-outline-danger">
+                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                    onclick="confirmarAccion(
+                                        'form-horario-{{ $horario->id }}',
+                                        '¿Eliminar horario?',
+                                        'Se eliminará este horario y los grupos asociados.'
+                                    )">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
