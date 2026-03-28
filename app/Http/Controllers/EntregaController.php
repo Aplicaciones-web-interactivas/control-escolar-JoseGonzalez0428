@@ -75,4 +75,26 @@ class EntregaController extends Controller
         return redirect()->route('tareas.show', $entrega->tarea_id)
                         ->with('exito', 'Entrega cancelada. Ya puedes subir otro archivo.');
     }
+
+    public function calificar(Request $request, $id)
+    {
+        // Solo maestros pueden calificar
+        if (session('usuario_rol') !== 'maestro' && session('usuario_rol') !== 'admin') {
+            abort(403, 'No tienes permiso para calificar entregas.');
+        }
+
+        $entrega = Entrega::findOrFail($id);
+
+        $request->validate([
+            'calificacion' => 'required|numeric|min:0|max:10',
+        ]);
+
+        $entrega->update([
+            'calificacion' => $request->calificacion,
+            'revisada'     => true,
+        ]);
+
+        return redirect()->route('tareas.show', $entrega->tarea_id)
+                        ->with('exito', 'Entrega calificada correctamente.');
+    }
 }

@@ -16,8 +16,13 @@ class Entrega extends Model
         'usuario_id',
         'archivo_pdf',
         'fecha_entrega',
+        'calificacion',
+        'revisada',
     ];
 
+    protected $casts = [
+        'revisada' => 'boolean',
+    ];
     // Entrega pertenece a una tarea
     public function tarea()
     {

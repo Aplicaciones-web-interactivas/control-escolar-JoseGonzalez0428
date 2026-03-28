@@ -65,4 +65,5 @@ Route::middleware('auth.sesion')->group(function () {
     Route::post('/tareas/{tarea_id}/entregas',       [EntregaController::class, 'store'])->name('entregas.store');
     Route::delete('/entregas/{id}',                  [EntregaController::class, 'destroy'])->name('entregas.destroy');
     Route::get('/entregas/{id}',                     [EntregaController::class, 'show'])->name('entregas.show');
+    Route::post('/entregas/{id}/calificar', [EntregaController::class, 'calificar'])->name('entregas.calificar');
 });

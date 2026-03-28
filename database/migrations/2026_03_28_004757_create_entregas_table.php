@@ -17,6 +17,11 @@ return new class extends Migration
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade'); // alumno
             $table->string('archivo_pdf'); // ruta del archivo
             $table->timestamp('fecha_entrega')->useCurrent();
+            
+            // ---> Los campos nuevos que te sugirió Claude:
+            $table->decimal('calificacion', 5, 2)->nullable();
+            $table->boolean('revisada')->default(false);
+
             // Un alumno solo puede entregar una vez por tarea
             $table->unique(['tarea_id', 'usuario_id']);
             $table->timestamps();
